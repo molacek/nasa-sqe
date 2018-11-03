@@ -12,8 +12,10 @@ NASA Software Quality Engineer challenge
 - /metadata/{nasa_id}
 - /captions/{nasa_id}
 
-### Parameters
+### Search parameters
 All parameters are optional, string type. At least one parameter must me specified.
+
+**GET /search/q={q}**
 
 - *q* Free text search terms to compare to all indexed metadata.
 - *center* NASA center which published the media.
@@ -29,6 +31,30 @@ All parameters are optional, string type. At least one parameter must me specifi
 - *year_start* The start year for results. Format: YYYY.
 - *year_end* The end year for results. Format: YYYY.
 
+### Retrieving a media asset’s manifest parameters
+Parameter is string type, required.
+
+**GET /asset/{nasa\_id}**
+
+- *nasa\_id* Free text search terms to compare to all indexed metadata.
+
+### Retrieving a media asset’s metadata location parameters
+
+Parameter is string type, required.
+
+**GET /metadata/{nasa\_id}**
+
+- *nasa\_id* The media asset’s NASA ID.
+
+### Retrieving a video asset’s captions location parameters
+
+Parameter is string type, required.
+
+**GET /captions/{nasa\_id}**
+
+- *nasa\_id* The video asset’s NASA ID.
+
+# QA
 
 ## Security
 
