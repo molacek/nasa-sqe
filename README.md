@@ -2,16 +2,25 @@
 
 NASA Software Quality Engineer challenge
 
-# Security
+## Basic API specification
+
+Root API: [https://images-api.nasa.gov](https://images-api.nasa.gov)
+
+Endpoints:
+-/search
+-/asset/{nasa_id}
+-/metadata/{nasa_id}
+-/captions/{nasa_id}
+
+
+## Security
 
 QA related to security
 
-# Performance
+## Performance
 
 QA related to API performance
 
-# Functionality
+## Functionality
 
 QA related to functionality
-
-GPG signed commit
