@@ -7,10 +7,10 @@ NASA Software Quality Engineer challenge
 Root API: [https://images-api.nasa.gov](https://images-api.nasa.gov)
 
 Endpoints:
--/search
--/asset/{nasa_id}
--/metadata/{nasa_id}
--/captions/{nasa_id}
+- /search
+- /asset/{nasa_id}
+- /metadata/{nasa_id}
+- /captions/{nasa_id}
 
 
 ## Security
