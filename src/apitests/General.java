@@ -11,7 +11,7 @@ import json.*;
 
 public class General {
 
-	@Test
+	@Test(enabled=false)
 	public void Test_Search() {
 		
 		HttpClient http_client = new HttpClient();
@@ -43,7 +43,7 @@ public class General {
 	
 	}
 	
-	@Test
+	@Test(enabled=false)
 	public void Test_Asset() {
 		HttpClient http_client = new HttpClient();
 		try {
@@ -59,6 +59,27 @@ public class General {
 			// Validate returned href
 			if ( ! asset.validateHref(url)) {
 				Assert.fail("Error validating HREF");
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	@Test
+	public void Test_Metadata() {
+		HttpClient http_client = new HttpClient();
+		try {
+			String url = "https://images-api.nasa.gov/metadata/KSC-2013-3022";
+			http_client.get(url);
+			Metadata metadata = new Metadata(http_client.responseText());
+			if (! metadata.validateLocation()) {
+				Assert.fail("No location for metadata (" + url + ")");
+			}
+			String metadataLocation = metadata.getLocation();
+			http_client.get(metadataLocation);
+			if (http_client.responseCode() != 200) {
+				Assert.fail("Error getting metadata from '" + metadataLocation + "'");
 			}
 			
 		} catch (Exception e) {
