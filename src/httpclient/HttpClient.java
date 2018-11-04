@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+
 public class HttpClient {
 	
 	private StringBuffer content;
@@ -38,5 +39,4 @@ public class HttpClient {
 	public String responseText() {
 		return this.content.toString();
 	}
-
 }
