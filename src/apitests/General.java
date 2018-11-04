@@ -22,20 +22,15 @@ public class General {
 			
 			SearchResult searchResult = new SearchResult(http_client.responseText());
 			
+			// Validate metadata
 			if ( ! searchResult.validateMetadata()) {
-				System.out.println("Metadata validation failed");
-				Assert.fail();
+				Assert.fail("Metadata validation failed");
 			}
 			
-			System.out.println("Result count: " + searchResult.getHitsCount());
-			
+			// Validate structure of all items
 			if ( ! searchResult.validateItems()) {
-				System.out.println("Items validation failed");
-				Assert.fail();
+				Assert.fail("Items validation failed");
 			}
-			
-			
-		    
 			
 		} catch (Exception e) {
 			System.out.println(e);
@@ -73,11 +68,16 @@ public class General {
 			String url = "https://images-api.nasa.gov/metadata/KSC-2013-3022";
 			http_client.get(url);
 			Metadata metadata = new Metadata(http_client.responseText());
+			
+			// Validate location
 			if (! metadata.validateLocation()) {
 				Assert.fail("No location for metadata (" + url + ")");
 			}
+			
 			String metadataLocation = metadata.getLocation();
 			http_client.get(metadataLocation);
+			
+			// Validate response for metadata location
 			if (http_client.responseCode() != 200) {
 				Assert.fail("Error getting metadata from '" + metadataLocation + "'");
 			}
