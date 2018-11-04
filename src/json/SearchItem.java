@@ -8,30 +8,7 @@ import java.util.List;
 import org.json.JSONArray;
 
 public class SearchItem {
-    
-	public class Links {
-	   
-		public String href;
-	    public String render;
-	    public String rel;
-	    
-	}
-	
-	public class Data {
-		String center;
-		String photographer;
-		String location;
-		String description;
-		String nasa_id;
-		String media_type;
-		String date_created;
-		String title;
-		String[] keywords;
-	}
-	
-	public String href;
-	public Links links;
-	public Data data;
+   
 	private JSONObject searchItem;
 	private List<String> dataItemLists = new ArrayList<String>();
 	
@@ -40,7 +17,7 @@ public class SearchItem {
 		//this.dataItemLists = new ArrayList<String>();
 		this.dataItemLists.add("center");
 		//this.dataItemLists.add("photographer");
-		this.dataItemLists.add("location");
+		//this.dataItemLists.add("location");
 		this.dataItemLists.add("description");
 		this.dataItemLists.add("nasa_id");
 		this.dataItemLists.add("media_type");

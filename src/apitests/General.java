@@ -12,27 +12,44 @@ import json.*;
 public class General {
 
 	@Test
-	public void Test_A() {
+	public void Test_Search() {
 		
 		HttpClient http_client = new HttpClient();
 		
 		try {
-			http_client.get("https://images-api.nasa.gov/search?q=center");
-			JSONObject responseJson = new JSONObject(http_client.responseText());
-			JSONObject responseCollection = (JSONObject)responseJson.get("collection");
-			JSONArray responseItems = (JSONArray)responseCollection.get("items");
-			for(int i=0; i<responseItems.length(); i++) {
-			    SearchItem si = new SearchItem(responseItems.getJSONObject(i));
-			    if ( ! si.validateItemStructure() ) {
-			    	Assert.fail("Invalid structure for search item: " + responseItems.getJSONObject(i));
-			    }
+			
+			http_client.get("https://images-api.nasa.gov/search?q=Ken");
+			
+			SearchResult searchResult = new SearchResult(http_client.responseText());
+			
+			if ( ! searchResult.validateMetadata()) {
+				System.out.println("Metadata validation failed");
+				Assert.fail();
 			}
+			
+			System.out.println("Result count: " + searchResult.getHitsCount());
+			
+			if ( ! searchResult.validateItems()) {
+				System.out.println("Items validation failed");
+				Assert.fail();
+			}
+			
+			
 		    
 			
 		} catch (Exception e) {
-			//System.out.println(e.getStackTrace());
 			System.out.println(e);
 		}
 	
+	}
+	
+	@Test
+	public void Test_Asset() {
+		HttpClient http_client = new HttpClient();
+		try {
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 }
