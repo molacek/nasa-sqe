@@ -12,6 +12,7 @@ public class HttpClient {
 	
 	private StringBuffer content;
 	private int responseCode;
+	private String contentType;
 	
 	public HttpClient() {
 		
@@ -21,10 +22,17 @@ public class HttpClient {
 		URL url = new URL(req_url);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
+		
+		// Set response code
 		this.responseCode = conn.getResponseCode();
 		if (this.responseCode != 200) {
 			return;
 		}
+		
+		// Set content type
+		this.contentType = conn.getHeaderField("content-type");
+		
+		// Read response body
 		BufferedReader in = new BufferedReader(
 			new InputStreamReader(conn.getInputStream())
 		);
@@ -41,5 +49,17 @@ public class HttpClient {
 	}
 	public String responseText() {
 		return this.content.toString();
+	}
+	
+	public String contentType() {
+		return this.contentType;
+	}
+	
+	public boolean validateContentType() {
+		boolean validation = this.contentType.equals("application/json; charset=UTF-8");
+		if ( ! validation) {
+			System.out.println("Invalid response content type");
+		}
+		return validation;
 	}
 }

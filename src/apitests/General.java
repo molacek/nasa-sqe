@@ -19,6 +19,7 @@ public class General {
 		try {
 			
 			http_client.get("https://images-api.nasa.gov/search?q=Ken");
+			Assert.assertTrue(http_client.validateContentType());
 			
 			SearchResult searchResult = new SearchResult(http_client.responseText());
 			
@@ -43,7 +44,10 @@ public class General {
 		HttpClient http_client = new HttpClient();
 		try {
 			String url = "https://images-api.nasa.gov/asset/KSC-2013-3022";
+			
 			http_client.get(url);
+			Assert.assertTrue(http_client.validateContentType());
+			
 			Asset asset = new Asset(http_client.responseText());
 			
 			// Validate links count
@@ -66,7 +70,10 @@ public class General {
 		HttpClient http_client = new HttpClient();
 		try {
 			String url = "https://images-api.nasa.gov/metadata/KSC-2013-3022";
+			
 			http_client.get(url);
+			Assert.assertTrue(http_client.validateContentType());
+			
 			Metadata metadata = new Metadata(http_client.responseText());
 			
 			// Validate location
