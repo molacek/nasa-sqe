@@ -47,6 +47,19 @@ public class General {
 	public void Test_Asset() {
 		HttpClient http_client = new HttpClient();
 		try {
+			String url = "https://images-api.nasa.gov/asset/KSC-2013-3022";
+			http_client.get(url);
+			Asset asset = new Asset(http_client.responseText());
+			
+			// Validate links count
+			if (asset.linksCount() == 0) {
+				Assert.fail("Links count is zero");
+			}
+			
+			// Validate returned href
+			if ( ! asset.validateHref(url)) {
+				Assert.fail("Error validating HREF");
+			}
 			
 		} catch (Exception e) {
 			System.out.println(e);
