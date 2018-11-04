@@ -18,7 +18,7 @@ public class SearchItem {
 		this.dataItemLists.add("center");
 		//this.dataItemLists.add("photographer");
 		//this.dataItemLists.add("location");
-		this.dataItemLists.add("description");
+		//this.dataItemLists.add("description");
 		this.dataItemLists.add("nasa_id");
 		this.dataItemLists.add("media_type");
 		this.dataItemLists.add("date_created");
@@ -28,15 +28,17 @@ public class SearchItem {
 	
 	private boolean validateLinks(JSONObject links) {
 		String href = links.getString("href");
-		String render = links.getString("render");
+		//String render = links.getString("render");
 		String rel = links.getString("rel");
 		
+		/*
 		if ( ! render.equals("image")) {
-			System.out.println("\"render\" is not \"image\" (" + links + ")");
+			System.out.println("'render' is not \"image\" (" + links + ")");
 			return false;
 		}
+		*/
 		
-		if ( ! rel.equals("preview")) {
+		if ( ! (rel.equals("preview") || rel.equals("captions"))) {
 			System.out.println("\"rel\" is not \"preview\" (" + links + ")");
 			return false;
 		}
@@ -64,8 +66,18 @@ public class SearchItem {
 	
 	public boolean validateItemStructure() {
 		//System.out.println("Processing: " + this.searchItem);
-		String href = this.searchItem.getString("href");
-		JSONArray links = this.searchItem.getJSONArray("links");
+		if (this.searchItem.has("links")) {
+			JSONArray links = this.searchItem.getJSONArray("links");
+			
+			// Validate main links	
+			for (int i=0; i<links.length(); i++) {
+				if (! this.validateLinks(links.getJSONObject(i))) {
+			        return false;
+				}
+			}
+		}
+		
+		String href = this.searchItem.getString("href"); 
 		JSONArray data = this.searchItem.getJSONArray("data");
 
 		// Validate main href
@@ -78,13 +90,6 @@ public class SearchItem {
 			return false;
 		}
 		
-		// Validate main links	
-		for (int i=0; i<links.length(); i++) {
-			if (! this.validateLinks(links.getJSONObject(i))) {
-		        return false;
-			}
-		}
-	
 		// Validate data
 		for (int i=0; i<data.length(); i++) {
 			if (! this.validateData(data.getJSONObject(i))) {
