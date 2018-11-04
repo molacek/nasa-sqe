@@ -20,6 +20,13 @@ public class General {
 	    };
 	}
 	
+	@DataProvider(name = "NasaId")
+	public static Object[][] nasaId() {
+	    return new Object[][] {
+	        {"KSC-2013-3022"}, {"KSC-2013-3023"}
+	    };
+	}
+	
 	@Test(enabled=true, dataProvider = "Query")
 	public void Test_Search(String query, boolean resultShoudExists) {
 		
@@ -57,11 +64,11 @@ public class General {
 	
 	}
 	
-	@Test(enabled=false)
-	public void Test_Asset() {
+	@Test(enabled=true, dataProvider = "NasaId")
+	public void Test_Asset(String nasa_id) {
 		HttpClient http_client = new HttpClient();
 		try {
-			String url = "https://images-api.nasa.gov/asset/KSC-2013-3022";
+			String url = "https://images-api.nasa.gov/asset/" + URLEncoder.encode(nasa_id, "UTF-8");
 			
 			http_client.get(url);
 			Assert.assertTrue(http_client.validateContentType());
@@ -84,11 +91,11 @@ public class General {
 		}
 	}
 	
-	@Test(enabled=false)
-	public void Test_Metadata() {
+	@Test(enabled=true, dataProvider = "NasaId")
+	public void Test_Metadata(String nasa_id) {
 		HttpClient http_client = new HttpClient();
 		try {
-			String url = "https://images-api.nasa.gov/metadata/KSC-2013-3022";
+			String url = "https://images-api.nasa.gov/metadata/" + URLEncoder.encode(nasa_id, "UTF-8");
 			
 			http_client.get(url);
 			Assert.assertTrue(http_client.validateContentType());
