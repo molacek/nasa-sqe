@@ -22,6 +22,9 @@ public class HttpClient {
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
 		this.responseCode = conn.getResponseCode();
+		if (this.responseCode != 200) {
+			return;
+		}
 		BufferedReader in = new BufferedReader(
 			new InputStreamReader(conn.getInputStream())
 		);
