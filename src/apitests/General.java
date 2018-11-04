@@ -2,8 +2,9 @@ package apitests;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.DataProvider;
+
+import java.net.URLEncoder;
 
 import httpclient.HttpClient;
 import json.*;
@@ -15,19 +16,19 @@ public class General {
 	@DataProvider(name = "Query")
 	public static Object[][] query() {
 	    return new Object[][] {
-	        {"test"},
-	        {"Ken"}
+	        {"test", true}, {"Armstrong", true}, {"Apollo", true}, {"blahblahblah", false}
 	    };
 	}
 	
 	@Test(enabled=true, dataProvider = "Query")
-	public void Test_Search(String query) {
+	public void Test_Search(String query, boolean resultShoudExists) {
 		
 		HttpClient http_client = new HttpClient();
 		
 		try {
 			
-			http_client.get("https://images-api.nasa.gov/search?q=" + query);
+			http_client.get("https://images-api.nasa.gov/search?q=" + URLEncoder.encode(query, "UTF-8"));
+			Assert.assertTrue(http_client.responseCode() == 200);
 			Assert.assertTrue(http_client.validateContentType());
 			
 			SearchResult searchResult = new SearchResult(http_client.responseText());
@@ -35,6 +36,14 @@ public class General {
 			// Validate metadata
 			if ( ! searchResult.validateMetadata()) {
 				Assert.fail("Metadata validation failed");
+			}
+			
+			if (resultShoudExists && searchResult.getHitsCount() == 0) {
+				Assert.fail("No results for query'" + query + "'");
+			}
+			
+			if (! resultShoudExists && searchResult.getHitsCount() > 0) {
+				Assert.fail("There shouldn't be results for query'" + query + "'");
 			}
 			
 			// Validate structure of all items
@@ -56,6 +65,7 @@ public class General {
 			
 			http_client.get(url);
 			Assert.assertTrue(http_client.validateContentType());
+			Assert.assertTrue(http_client.responseCode() == 200);
 			
 			Asset asset = new Asset(http_client.responseText());
 			
@@ -82,6 +92,7 @@ public class General {
 			
 			http_client.get(url);
 			Assert.assertTrue(http_client.validateContentType());
+			Assert.assertTrue(http_client.responseCode() == 200);
 			
 			Metadata metadata = new Metadata(http_client.responseText());
 			

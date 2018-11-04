@@ -1,6 +1,7 @@
 package httpclient;
 
 import java.net.MalformedURLException;
+
 import java.net.URL;
 import java.net.HttpURLConnection;
 import java.io.BufferedReader;
@@ -20,11 +21,13 @@ public class HttpClient {
 	
 	public void get(String req_url) throws MalformedURLException, IOException {
 		URL url = new URL(req_url);
+		
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
 		
 		// Set response code
 		this.responseCode = conn.getResponseCode();
+		
 		if (this.responseCode != 200) {
 			return;
 		}
