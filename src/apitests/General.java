@@ -2,23 +2,32 @@ package apitests;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.DataProvider;
 
 import httpclient.HttpClient;
-import org.json.JSONObject;
-import org.json.JSONArray;
 import json.*;
+
 
 
 public class General {
 
-	@Test(enabled=false)
-	public void Test_Search() {
+	@DataProvider(name = "Query")
+	public static Object[][] query() {
+	    return new Object[][] {
+	        {"test"},
+	        {"Ken"}
+	    };
+	}
+	
+	@Test(enabled=true, dataProvider = "Query")
+	public void Test_Search(String query) {
 		
 		HttpClient http_client = new HttpClient();
 		
 		try {
 			
-			http_client.get("https://images-api.nasa.gov/search?q=Ken");
+			http_client.get("https://images-api.nasa.gov/search?q=" + query);
 			Assert.assertTrue(http_client.validateContentType());
 			
 			SearchResult searchResult = new SearchResult(http_client.responseText());
@@ -65,7 +74,7 @@ public class General {
 		}
 	}
 	
-	@Test
+	@Test(enabled=false)
 	public void Test_Metadata() {
 		HttpClient http_client = new HttpClient();
 		try {
