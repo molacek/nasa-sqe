@@ -56,6 +56,25 @@ Parameter is string type, required.
 
 # QA
 
+## Functionality
+
+For functionality testing, I've used Java and TestNG framevork. Due the limited amout of time I've prepared only generic search test with *q=* parameter, Asset test and Metadata test. Input data for this test are provided using DataProvider class.
+
+Data for Generic search are in structure:
+```java
+{String query, boolean resultShoudExists}
+```
+Data for Asset and Metadata search are in structure:
+```java
+{String nasa_ids}
+```
+
+For sending request I've created simple `HttpClient` class, which can send HTTP GET requests and holds HTTP response code and response text.
+
+For validation od result structure I've created `SearchResult` class and `SearchItem` classes.
+
+Classes `Metadata`, `Asset` and `Caption` (missing implementation) are for validating of Metadata, Assed and Caption queries.
+
 ## Security
 
 For the sake os automated security tests, I'd verify the server doesn't disclosures any sensitive information.
@@ -81,9 +100,6 @@ The tool I'd use is JMeter. As the API is quite simple, I'd use the request mix 
 Another test would be a stress test, where I'd increase number of transactions per minute until the system stops responding correctly. This could be for example HTTP 500 status codes, Java stacktrace dumps, connection timeouts, etc. After the test is stopped, the system should recover withou administrator intervention.
 
 
-## Functionality
 
-As of functionality, I've implemented data integrity check for search result.
-Unfortunately, 
 
     
