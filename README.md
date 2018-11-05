@@ -74,7 +74,12 @@ Another test is a test of SSL connection parameters. I'm not sure how this is do
 
 ## Performance
 
-QA related to API performance
+In the terms of performance, I'd collect the required performance metrics. Either specified by business requirements or based on previous utilisation statistics or expected load in the future.
+
+The tool I'd use is JMeter. As the API is quite simple, I'd use the request mix based on previous experience. For example 60% of queries is generic search, 20% is search by photographer, 10% is request for metadata and 10% are asset search queries. Then I'd run test with ie. 100 request per minute for 20 minutes. Durimg the test I'd monitor system resurces of the Web Server, Application server, databases, network utilisation etc. The test duration and number of transactions per minute is just an example. Real numbers depends on proper system sizing.
+
+Another test would be a stress test, where I'd increase number of transactions per minute until the system stops responding correctly. This could be for example HTTP 500 status codes, Java stacktrace dumps, connection timeouts, etc. After the test is stopped, the system should recover withou administrator intervention.
+
 
 ## Functionality
 
