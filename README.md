@@ -58,7 +58,7 @@ Parameter is string type, required.
 
 ## Functionality
 
-For functionality testing, I've used Java and TestNG framevork. Due the limited amout of time I've prepared only generic search test with *q=* parameter, Asset test and Metadata test. Input data for this test are provided using DataProvider class.
+For functionality testing, I've used Java and TestNG framework. Due the limited amount of time I've prepared only generic search test with *q=* parameter, Asset test and Metadata test. Input data for this test are provided using DataProvider class.
 
 Data for Generic search are in structure:
 ```java
@@ -71,17 +71,17 @@ Data for Asset and Metadata search are in structure:
 
 For sending request I've created simple `HttpClient` class, which can send HTTP GET requests and holds HTTP response code and response text.
 
-For validation od result structure I've created `SearchResult` class and `SearchItem` classes.
+For result structure validation I've created `SearchResult` class and `SearchItem` classes.
 
-Classes `Metadata`, `Asset` and `Caption` (missing implementation) are for validating of Metadata, Assed and Caption queries.
+Classes `Metadata`, `Asset` and `Caption` (missing implementation) are for validating Metadata, Asset and Caption queries.
 
 ## Security
 
-For the sake os automated security tests, I'd verify the server doesn't disclosures any sensitive information.
+For the sake of automated security tests, I'd verify the server doesn't disclosures any sensitive information.
 
 I'd use the prepared Java HttpClient class, extended with reading HTTP response headers. The checks which should be done are
 HTTP headers verifications for HTTP server or application server version disclosure. At this specific instance, the API provides
-information about Web server (nginx/1.4.6) and OS version (Ubuntu). This information should would fail the sensitive information disclosure test. Another informatiod I'd look for is information about application server version or infrastructure inforation. There shouldn't be for example Set-Cookie HTTP hedader. This NASA API seems to be alrighnt in this matter.
+information about Web server (nginx/1.4.6) and OS version (Ubuntu). This information should would fail the sensitive information disclosure test. Another information I'd look for is information about application server version or infrastructure information. There shouldn't be for example Set-Cookie HTTP header. This NASA API seems to be alrighnt in this matter.
 
 Next test would be a SQL injection test. I'd fire requests like:
 
@@ -93,11 +93,11 @@ Another test is a test of SSL connection parameters. I'm not sure how this is do
 
 ## Performance
 
-In the terms of performance, I'd collect the required performance metrics. Either specified by business requirements or based on previous utilisation statistics or expected load in the future.
+In the terms of performance, I'd collect the required performance metrics. Either specified by business requirements or based on previous utilization statistics or expected load in the future.
 
-The tool I'd use is JMeter. As the API is quite simple, I'd use the request mix based on previous experience. For example 60% of queries is generic search, 20% is search by photographer, 10% is request for metadata and 10% are asset search queries. Then I'd run test with ie. 100 request per minute for 20 minutes. Durimg the test I'd monitor system resurces of the Web Server, Application server, databases, network utilisation etc. The test duration and number of transactions per minute is just an example. Real numbers depends on proper system sizing.
+The tool I'd use is JMeter. As the API is quite simple, I'd use the request mix based on previous experience. For example 60% of queries is generic search, 20% is search by photographer, 10% is request for metadata and 10% are asset search queries. Then I'd run test with ie. 100 request per minute for 20 minutes. During the test I'd monitor system resources of the Web Server, Application server, databases, network utilization etc. The test duration and number of transactions per minute is just an example. Real numbers depends on proper system sizing.
 
-Another test would be a stress test, where I'd increase number of transactions per minute until the system stops responding correctly. This could be for example HTTP 500 status codes, Java stacktrace dumps, connection timeouts, etc. After the test is stopped, the system should recover withou administrator intervention.
+Another test would be a stress test, where I'd increase number of transactions per minute until the system stops responding correctly. This could be for example HTTP 500 status codes, Java stacktrace dumps, connection timeouts, etc. After the test is stopped, the system should recover without administrator intervention.
 
 
 
